@@ -1,0 +1,7 @@
+---
+# defaults file for spring-boot-app
+
+service_name: "app"
+log_folder: "/var/log"
+app_description: ""
+app_user: "app"

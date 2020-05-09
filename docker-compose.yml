@@ -1,0 +1,26 @@
+version: '3.1'
+services:
+
+  spring-boot-todo-list:
+    build: .
+    container_name: spring-boot-todo-list
+    ports:
+      - "8080:8080"
+      - "8787:8787"
+    restart: always
+    depends_on:
+      - todolist-db
+
+  todolist-db:
+    image: postgres:10.7
+    container_name: todolist-db
+    environment:
+      - POSTGRES_USER=siva
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=appdb
+      - PGDATA=/data/postgres
+    volumes:
+      - ~/data/todolist-db:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
