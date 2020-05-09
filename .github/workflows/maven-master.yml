@@ -58,10 +58,11 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Publish artifact on GitHub Packages
-        #run: mvn -B clean deploy -DskipTests
+        run: ./mvn -B -e -Dmaven.wagon.http.pool=false clean deploy -DskipTests
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mkdir -p ~/.m2
-          echo "<settings><servers><server><id>github</id><username>{{ secrets.DOCKER_USER }}</username><password>${GITHUB_TOKEN}</password></server></servers></settings>" > ~/.m2/settings.xml
-          mvn -B -e -Dmaven.wagon.http.pool=false clean deploy -X
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

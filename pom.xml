@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.sivalabs</groupId>
     <artifactId>spring-boot-deployment</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>spring-boot-deployment</name>
     <description>Todo List Manager</description>
 
@@ -104,9 +104,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
+                <!--<configuration>
                     <executable>true</executable>
-                </configuration>
+                </configuration>-->
             </plugin>
         </plugins>
     </build>
