@@ -64,4 +64,4 @@ jobs:
         run: |
           mkdir -p ~/.m2
           echo "<settings><servers><server><id>github</id><username>{{ secrets.DOCKER_USER }}</username><password>${GITHUB_TOKEN}</password></server></servers></settings>" > ~/.m2/settings.xml
-          mvn deploy
+          mvn -B -e -Dmaven.wagon.http.pool=false clean deploy -X
