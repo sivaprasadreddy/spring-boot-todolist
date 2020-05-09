@@ -34,7 +34,7 @@
           name: javac
           link: /usr/bin/javac
     - role: spring-boot-app
-      jar_path: /vagrant_code/target/spring-boot-todo-list-0.0.1.jar
+      jar_path: /vagrant_code/target/spring-boot-deployment-0.0.1.jar
       service_name: "todolist"
       log_folder: "/var/todolist/log"
       app_description: "todo list app"
