@@ -18,6 +18,15 @@
         <java.version>11</java.version>
     </properties>
 
+    <distributionManagement>
+
+        <repository>
+            <id>github</id>
+            <name>Todo List Manager using SpringBoot</name>
+            <url>https://maven.pkg.github.com/sivaprasadreddy/spring-boot-deployment</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
