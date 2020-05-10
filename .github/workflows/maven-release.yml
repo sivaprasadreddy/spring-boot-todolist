@@ -40,7 +40,7 @@ jobs:
         run: docker push $REPO
 
       - name: Prepare package
-        run: chmod a+x prepare-package.sh && sh prepare-package.sh
+        run: chmod a+x prepare-package.sh && ./prepare-package.sh
 
       - name: Release
         uses: softprops/action-gh-release@v1

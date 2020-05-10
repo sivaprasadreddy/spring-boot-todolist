@@ -1,9 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 mvn clean install -DskipTests
 mkdir -p /tmp/app/
 cd ./target
-files=(*.jar)
+files=( *.jar )
+#echo "${files[0]}"
 cd ..
 cp target/*.jar /tmp/app/
 cp deployment/etc/* /tmp/app/
