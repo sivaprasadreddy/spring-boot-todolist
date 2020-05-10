@@ -9,8 +9,6 @@ jobs:
   test:
     name: Unit & Integration Tests
     runs-on: ubuntu-18.04
-    env:
-      REPO: ${{ secrets.DOCKER_REPO }}
 
     steps:
       - uses: actions/checkout@v1
@@ -29,12 +27,3 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B clean install
-
-      - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-
-      - name: Build Docker image
-        run: docker build -t $REPO:latest -t $REPO:${GITHUB_SHA::8} .
-
-      - name: Publish Docker image
-        run: docker push $REPO
