@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.sivalabs</groupId>
     <artifactId>spring-boot-deployment</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <name>spring-boot-deployment</name>
     <description>Todo List Manager</description>
 
