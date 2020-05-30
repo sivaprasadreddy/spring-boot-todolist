@@ -47,6 +47,6 @@ jobs:
         with:
           files: |
             target/*.jar
-            spring-boot-deployment.zip
+            spring-boot-todolist.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

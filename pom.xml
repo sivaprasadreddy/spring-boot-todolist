@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.sivalabs</groupId>
-    <artifactId>spring-boot-deployment</artifactId>
+    <artifactId>spring-boot-todolist</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-boot-deployment</name>
+    <name>spring-boot-todolist</name>
     <description>Todo List Manager</description>
 
     <properties>
@@ -22,7 +22,7 @@
         <repository>
             <id>github</id>
             <name>GitHub sivaprasadreddy Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/sivaprasadreddy/spring-boot-deployment</url>
+            <url>https://maven.pkg.github.com/sivaprasadreddy/spring-boot-todolist</url>
         </repository>
     </distributionManagement>
 

@@ -1,2 +1,2 @@
-# spring-boot-deployment
+# spring-boot-todolist
 Deploying SpringBoot Applications
