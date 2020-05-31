@@ -10,7 +10,7 @@ jobs:
     name: Release Package
     runs-on: ubuntu-18.04
     env:
-      REPO: ${{ secrets.DOCKER_REPO }}
+      REPO: ${{ secrets.DOCKER_USER }}/spring-boot-todolist
 
     steps:
       - uses: actions/checkout@v1
