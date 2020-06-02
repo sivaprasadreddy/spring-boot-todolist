@@ -5,9 +5,11 @@ import com.sivalabs.todolist.repo.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/todos")
@@ -24,14 +26,19 @@ public class TodoRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveTodo(@RequestBody Todo todo) {
+    public Todo saveTodo(@RequestBody Todo todo) {
         todo.setId(null);
-        todoRepository.save(todo);
+        return todoRepository.save(todo);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTodo(@PathVariable Long id) {
-        todoRepository.deleteById(id);
+    public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
+        Optional<Todo> todoOptional = todoRepository.findById(id);
+        if(todoOptional.isPresent()) {
+            todoRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }
