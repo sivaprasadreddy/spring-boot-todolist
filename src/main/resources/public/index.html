@@ -38,12 +38,14 @@
         <ul class="list-group">
             <table class="table table-striped">
                 <tbody>
-                    <tr v-for="t in todos">
-                        <td style="width: 90%">{{t.content}}</td>
-                        <td><button type="button" class="btn btn-danger"
-                                    v-on:click="deleteTodo(t.id)">Delete</button>
-                        </td>
-                    </tr>
+                <tr v-for="t in todos">
+                    <td style="width: 90%">{{t.content}}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger"
+                                v-on:click="deleteTodo(t.id)">Delete
+                        </button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </ul>

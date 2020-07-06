@@ -4,11 +4,13 @@ html {
     position: relative;
     min-height: 100%;
 }
+
 body {
     /* Margin bottom by footer height */
     padding-top: 80px;
     margin-bottom: 80px;
 }
+
 .footer {
     position: absolute;
     bottom: 0;

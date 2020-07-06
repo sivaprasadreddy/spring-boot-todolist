@@ -10,7 +10,7 @@ new Vue({
     methods: {
         loadTodos() {
             let self = this;
-            $.getJSON( "api/todos", function( data ) {
+            $.getJSON("api/todos", function (data) {
                 self.todos = data
             });
         },
@@ -23,7 +23,7 @@ new Vue({
                 url: 'api/todos',
                 data: JSON.stringify(this.newTodo),
                 contentType: "application/json",
-                success: function() {
+                success: function () {
                     self.newTodo = {};
                     self.loadTodos();
                 }
@@ -35,14 +35,12 @@ new Vue({
 
             $.ajax({
                 type: "DELETE",
-                url: 'api/todos/'+id,
-                success: function() {
+                url: 'api/todos/' + id,
+                success: function () {
                     self.loadTodos();
                 }
             });
         }
     },
-    computed: {
-
-    }
+    computed: {}
 });

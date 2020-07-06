@@ -3,9 +3,9 @@
 import com.sivalabs.JenkinsSharedLib
 
 properties([
-    parameters([
-        booleanParam(defaultValue: false, name: 'PUBLISH_TO_DOCKERHUB', description: 'Publish Docker Image to DockerHub?')
-    ])
+        parameters([
+                booleanParam(defaultValue: false, name: 'PUBLISH_TO_DOCKERHUB', description: 'Publish Docker Image to DockerHub?')
+        ])
 ])
 
 def DOCKER_USERNAME = 'sivaprasadreddy'
@@ -20,7 +20,7 @@ node {
         utils.runMavenTests("Test")
         utils.publishDockerImage("Publish Docker Image", DOCKER_USERNAME, APP_IMAGE_NAME)
     }
-    catch(err) {
+    catch (err) {
         echo "ERROR: ${err}"
         currentBuild.result = currentBuild.result ?: "FAILURE"
     }
