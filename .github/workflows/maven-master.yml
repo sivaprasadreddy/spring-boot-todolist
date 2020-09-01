@@ -6,12 +6,14 @@ on:
       - 'master'
 
 jobs:
-  test:
+  Build:
     name: Unit & Integration Tests
     runs-on: ubuntu-18.04
+    env:
+      DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USER }}/spring-boot-todolist
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Set up JDK 11
         uses: actions/setup-java@v1
@@ -26,4 +28,16 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build with Maven
-        run: mvn -B clean install
+        run: ./mvnw -B clean package -DskipTests
+
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+
+      - name: Build Docker image
+        run: |
+          ./mvnw spring-boot:build-image -DskipTests
+          docker tag ${DOCKER_IMAGE_NAME}:latest ${DOCKER_IMAGE_NAME}:${GITHUB_SHA::8}
+          echo "Tagged with latest & ${GITHUB_SHA::8}"
+
+      - name: Publish Docker image
+        run: docker push $DOCKER_IMAGE_NAME
