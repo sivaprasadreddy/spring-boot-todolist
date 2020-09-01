@@ -8,8 +8,8 @@ on:
       - '!release'
 
 jobs:
-  test:
-    name: Unit & Integration Tests
+  build:
+    name: Run Unit & Integration Tests
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2

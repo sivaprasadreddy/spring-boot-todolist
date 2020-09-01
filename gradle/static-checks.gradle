@@ -2,6 +2,7 @@ apply plugin: 'checkstyle'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
 apply plugin: "com.github.spotbugs"
+apply plugin: "org.sonarqube"
 
 checkstyle {
     toolVersion "${checkstyle_version}"
@@ -64,6 +65,14 @@ jacocoTestCoverageVerification {
             }
             excludes = jacocoExcludes
         }
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "sivaprasadreddy_spring-boot-todolist"
+        property "sonar.organization", "sivaprasadreddy-github"
+        property "sonar.host.url", "https://sonarcloud.io"
     }
 }
 

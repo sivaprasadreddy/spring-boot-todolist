@@ -6,9 +6,13 @@ on:
       - master
       - release
 jobs:
-  test:
-    name: Unit & Integration Tests
+  build:
+    name: Run Tests and Build Artifact
     runs-on: ubuntu-18.04
+    env:
+      ARTIFACT_NAME: "spring-boot-todolist"
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     steps:
       - uses: actions/checkout@v2
 
@@ -29,15 +33,18 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build
 
+      - name: Run SonarQube Checks
+        run: ./gradlew sonarqube
+
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: Package
+          name: ${{ env.ARTIFACT_NAME }}
           path: build/libs
 
   docker-publish:
     name: Build and Publish Docker Image
-    needs: [test]
+    needs: [ build ]
     runs-on: ubuntu-18.04
     env:
       DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USER }}/spring-boot-todolist
