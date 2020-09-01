@@ -2,7 +2,6 @@ apply plugin: 'checkstyle'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
 apply plugin: "com.github.spotbugs"
-apply plugin: 'org.owasp.dependencycheck'
 
 checkstyle {
     toolVersion "${checkstyle_version}"
@@ -68,11 +67,5 @@ jacocoTestCoverageVerification {
     }
 }
 
-dependencyCheck {
-    autoUpdate=true
-    cveValidForHours=1
-    format='ALL'
-}
-
 test.finalizedBy jacocoTestReport
-check.dependsOn jacocoTestCoverageVerification, dependencyCheckAnalyze
+check.dependsOn jacocoTestCoverageVerification
