@@ -1,25 +1,32 @@
 .DEFAULT_GOAL := help
 
 help:
-	@echo "Usage: make build | run | dbuild | drun | clean"
+	@echo "Usage: make build | test | run | clean"
 
 build:
-	@echo "Running maven build"
-	./mvnw clean package
+	@echo "Running gradle build"
+	./gradlew clean build
+
+test:
+	@echo "Running tests"
+	./gradlew test
 
 run:
 	@echo "Running spring boot application"
-	./mvnw spring-boot:run
-
-dbuild:
-	@echo "Building docker image"
-	./mvnw spring-boot:build-image
-
-drun:
-	@echo "Running application using docker-compose"
-	docker-compose up --build -d spring-boot-todolist
+	SPRING_PROFILES_ACTIVE=local ./gradlew bootRun
 
 clean:
-	@echo "Cleaning maven target, docker containers"
-	./mvnw clean
-	docker-compose down --remove-orphans --volumes
+	@echo "Cleaning build artifacts"
+	./gradlew clean
+
+dockerbuild:
+	@echo "Building docker image"
+	./gradlew bootBuildImage
+
+dockerrun:
+	@echo "Running application using docker-compose"
+	docker-compose -f docker-compose.yml -f docker-compose-app.yml up --build -d spring-boot-todolist
+
+dockerstop:
+	@echo "Stop application using docker-compose"
+	docker-compose -f docker-compose.yml -f docker-compose-app.yml down --volumes --remove-orphans
