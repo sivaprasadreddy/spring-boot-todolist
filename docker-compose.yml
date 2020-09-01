@@ -1,33 +1,13 @@
 version: '3.8'
 services:
 
-  spring-boot-todolist:
-    build: .
-    image: sivaprasadreddy/spring-boot-todolist
-    container_name: spring-boot-todolist
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=org.postgresql.Driver
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://todolist-db:5432/appdb
-      - SPRING_DATASOURCE_USERNAME=siva
-      - SPRING_DATASOURCE_PASSWORD=secret
-    ports:
-      - "8080:8080"
-      - "8787:8787"
-    restart: always
-    depends_on:
-      - todolist-db
-
   todolist-db:
     image: postgres:10.7
-    container_name: todolist-db
     environment:
       - POSTGRES_USER=siva
       - POSTGRES_PASSWORD=secret
       - POSTGRES_DB=appdb
       - PGDATA=/data/postgres
-    volumes:
-      - ~/data/todolist-db:/data/postgres
     ports:
       - "5432:5432"
     restart: unless-stopped

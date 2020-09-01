@@ -1,27 +1,23 @@
 package com.sivalabs.todolist.web.controller;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sivalabs.todolist.entity.Todo;
-import com.sivalabs.todolist.repo.TodoRepository;
+import com.sivalabs.todolist.service.TodoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -35,7 +31,7 @@ class TodoRestControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private TodoRepository todoRepository;
+    private TodoService todoService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -53,7 +49,7 @@ class TodoRestControllerTest {
 
     @Test
     void shouldFetchAllTodos() throws Exception {
-        given(todoRepository.findAll(any(Sort.class))).willReturn(this.todoList);
+        given(todoService.getTodos()).willReturn(this.todoList);
 
         this.mockMvc.perform(get("/api/todos"))
                 .andExpect(status().isOk())
@@ -62,7 +58,7 @@ class TodoRestControllerTest {
 
     @Test
     void shouldCreateNewTodo() throws Exception {
-        given(todoRepository.save(any(Todo.class))).willAnswer((invocation) -> invocation.getArgument(0));
+        given(todoService.saveTodo(any(Todo.class))).willAnswer((invocation) -> invocation.getArgument(0));
 
         Todo todo = new Todo(null, "New Todo", LocalDateTime.now(), null);
         this.mockMvc.perform(post("/api/todos")
@@ -70,20 +66,16 @@ class TodoRestControllerTest {
                 .content(objectMapper.writeValueAsString(todo)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.content", is(todo.getContent())))
-                .andExpect(jsonPath("$.created_at", notNullValue()))
-        ;
-
+                .andExpect(jsonPath("$.created_at", notNullValue()));
     }
 
     @Test
     void shouldDeleteTodo() throws Exception {
         Long todoId = 1L;
         Todo todo = new Todo(todoId, "Todo", LocalDateTime.now(), null);
-        given(todoRepository.findById(todoId)).willReturn(Optional.of(todo));
-        doNothing().when(todoRepository).deleteById(todo.getId());
+        given(todoService.deleteTodo(todo.getId())).willReturn(true);
 
         this.mockMvc.perform(delete("/api/todos/{id}", todo.getId()))
                 .andExpect(status().isNoContent());
-
     }
 }
