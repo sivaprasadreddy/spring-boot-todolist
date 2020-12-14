@@ -36,7 +36,9 @@ configurations {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
 }
 
 dependencies {
@@ -69,8 +71,6 @@ dependencies {
     }
     testImplementation "org.testcontainers:junit-jupiter"
     testImplementation "org.testcontainers:postgresql"
-    testImplementation "org.testcontainers:localstack"
-
 }
 
 dependencyManagement {
@@ -112,5 +112,5 @@ gitProperties {
 }
 
 wrapper {
-    gradleVersion = "6.5"
+    gradleVersion = "6.7.1"
 }
