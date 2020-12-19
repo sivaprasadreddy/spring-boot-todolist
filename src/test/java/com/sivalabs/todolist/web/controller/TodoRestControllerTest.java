@@ -72,10 +72,18 @@ class TodoRestControllerTest {
     @Test
     void shouldDeleteTodo() throws Exception {
         Long todoId = 1L;
-        Todo todo = new Todo(todoId, "Todo", LocalDateTime.now(), null);
-        given(todoService.deleteTodo(todo.getId())).willReturn(true);
+        given(todoService.deleteTodo(todoId)).willReturn(true);
 
-        this.mockMvc.perform(delete("/api/todos/{id}", todo.getId()))
+        this.mockMvc.perform(delete("/api/todos/{id}", todoId))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void shouldReturn404WhenDeleteNonExistingTodo() throws Exception {
+        Long todoId = 1L;
+        given(todoService.deleteTodo(todoId)).willReturn(false);
+
+        this.mockMvc.perform(delete("/api/todos/{id}", todoId))
+            .andExpect(status().isNotFound());
     }
 }

@@ -68,4 +68,11 @@ class TodoRestControllerIT extends AbstractIntegrationTest {
         this.mockMvc.perform(delete("/api/todos/{id}", todoId))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    void shouldReturn404WhenDeleteNonExistingTodo() throws Exception {
+        Long todoId = 999L;
+        this.mockMvc.perform(delete("/api/todos/{id}", todoId))
+            .andExpect(status().isNotFound());
+    }
 }

@@ -43,7 +43,6 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -52,19 +51,16 @@ dependencies {
     testImplementation 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     implementation "org.webjars:bootstrap:${bootstrap_version}"
     implementation "org.webjars:font-awesome:${font_awesome_version}"
     implementation "org.webjars:vue:${vue_version}"
-    implementation "io.springfox:springfox-swagger2:${swagger_version}"
-    implementation "io.springfox:springfox-swagger-ui:${swagger_version}"
+    implementation "io.springfox:springfox-boot-starter:${swagger_version}"
 
     implementation "org.apache.commons:commons-lang3:${commons_lang_version}"
     implementation "commons-io:commons-io:${commons_io_version}"
-    implementation "org.modelmapper:modelmapper:${modelmapper_version}"
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -85,17 +81,15 @@ springBoot {
 }
 
 bootJar {
-    //launchScript()
+    launchScript()
 }
-//bootBuildInfo.mustRunAfter processResources
+
 bootBuildImage {
     imageName = "sivaprasadreddy/spring-boot-todolist"
 }
 
-//dockerCompose.isRequiredBy(test)
 dockerCompose {
     useComposeFiles = ['docker-compose.yml']
-    //isRequiredBy(project.tasks.test)
 }
 
 compileJava.dependsOn processResources
