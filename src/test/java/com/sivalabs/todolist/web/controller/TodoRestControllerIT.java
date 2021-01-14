@@ -1,17 +1,5 @@
 package com.sivalabs.todolist.web.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sivalabs.todolist.common.AbstractIntegrationTest;
-import com.sivalabs.todolist.entity.Todo;
-import com.sivalabs.todolist.repo.TodoRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -21,13 +9,22 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sivalabs.todolist.common.AbstractIntegrationTest;
+import com.sivalabs.todolist.entity.Todo;
+import com.sivalabs.todolist.repo.TodoRepository;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
 class TodoRestControllerIT extends AbstractIntegrationTest {
 
-    @Autowired
-    private TodoRepository todoRepository;
+    @Autowired private TodoRepository todoRepository;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    @Autowired private ObjectMapper objectMapper;
 
     private List<Todo> todoList;
 
@@ -46,7 +43,8 @@ class TodoRestControllerIT extends AbstractIntegrationTest {
 
     @Test
     void shouldFetchAllTodos() throws Exception {
-        this.mockMvc.perform(get("/api/todos"))
+        this.mockMvc
+                .perform(get("/api/todos"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", is(todoList.size())));
     }
@@ -54,9 +52,11 @@ class TodoRestControllerIT extends AbstractIntegrationTest {
     @Test
     void shouldCreateNewTodo() throws Exception {
         Todo todo = new Todo(null, "New Todo", LocalDateTime.now(), null);
-        this.mockMvc.perform(post("/api/todos")
-                .contentType(APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(todo)))
+        this.mockMvc
+                .perform(
+                        post("/api/todos")
+                                .contentType(APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(todo)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.content", is(todo.getContent())))
                 .andExpect(jsonPath("$.created_at", notNullValue()));
@@ -65,14 +65,12 @@ class TodoRestControllerIT extends AbstractIntegrationTest {
     @Test
     void shouldDeleteTodo() throws Exception {
         Long todoId = todoList.get(0).getId();
-        this.mockMvc.perform(delete("/api/todos/{id}", todoId))
-                .andExpect(status().isNoContent());
+        this.mockMvc.perform(delete("/api/todos/{id}", todoId)).andExpect(status().isNoContent());
     }
 
     @Test
     void shouldReturn404WhenDeleteNonExistingTodo() throws Exception {
         Long todoId = 999L;
-        this.mockMvc.perform(delete("/api/todos/{id}", todoId))
-            .andExpect(status().isNotFound());
+        this.mockMvc.perform(delete("/api/todos/{id}", todoId)).andExpect(status().isNotFound());
     }
 }

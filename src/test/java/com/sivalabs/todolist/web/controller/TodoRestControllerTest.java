@@ -1,19 +1,5 @@
 package com.sivalabs.todolist.web.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sivalabs.todolist.entity.Todo;
-import com.sivalabs.todolist.service.TodoService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.mockito.ArgumentMatchers.any;
@@ -25,16 +11,26 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sivalabs.todolist.entity.Todo;
+import com.sivalabs.todolist.service.TodoService;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+
 @WebMvcTest(controllers = TodoRestController.class)
 class TodoRestControllerTest {
-    @Autowired
-    private MockMvc mockMvc;
+    @Autowired private MockMvc mockMvc;
 
-    @MockBean
-    private TodoService todoService;
+    @MockBean private TodoService todoService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    @Autowired private ObjectMapper objectMapper;
 
     private List<Todo> todoList;
 
@@ -51,19 +47,23 @@ class TodoRestControllerTest {
     void shouldFetchAllTodos() throws Exception {
         given(todoService.getTodos()).willReturn(this.todoList);
 
-        this.mockMvc.perform(get("/api/todos"))
+        this.mockMvc
+                .perform(get("/api/todos"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", is(todoList.size())));
     }
 
     @Test
     void shouldCreateNewTodo() throws Exception {
-        given(todoService.saveTodo(any(Todo.class))).willAnswer((invocation) -> invocation.getArgument(0));
+        given(todoService.saveTodo(any(Todo.class)))
+                .willAnswer((invocation) -> invocation.getArgument(0));
 
         Todo todo = new Todo(null, "New Todo", LocalDateTime.now(), null);
-        this.mockMvc.perform(post("/api/todos")
-                .contentType(APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(todo)))
+        this.mockMvc
+                .perform(
+                        post("/api/todos")
+                                .contentType(APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(todo)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.content", is(todo.getContent())))
                 .andExpect(jsonPath("$.created_at", notNullValue()));
@@ -74,8 +74,7 @@ class TodoRestControllerTest {
         Long todoId = 1L;
         given(todoService.deleteTodo(todoId)).willReturn(true);
 
-        this.mockMvc.perform(delete("/api/todos/{id}", todoId))
-                .andExpect(status().isNoContent());
+        this.mockMvc.perform(delete("/api/todos/{id}", todoId)).andExpect(status().isNoContent());
     }
 
     @Test
@@ -83,7 +82,6 @@ class TodoRestControllerTest {
         Long todoId = 1L;
         given(todoService.deleteTodo(todoId)).willReturn(false);
 
-        this.mockMvc.perform(delete("/api/todos/{id}", todoId))
-            .andExpect(status().isNotFound());
+        this.mockMvc.perform(delete("/api/todos/{id}", todoId)).andExpect(status().isNotFound());
     }
 }

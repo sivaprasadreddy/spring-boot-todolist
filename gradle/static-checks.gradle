@@ -1,7 +1,6 @@
 apply plugin: 'checkstyle'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
-apply plugin: "com.github.spotbugs"
 apply plugin: "org.sonarqube"
 
 def jacocoMinCoverageRequired = 0.80
@@ -10,6 +9,7 @@ checkstyle {
     toolVersion "${checkstyle_version}"
     maxWarnings = 0
     configFile = file("${project.rootDir}/build-config/checkstyle/checkstyle.xml")
+    configProperties = ["suppressionFile" : file("${project.rootDir}/build-config/checkstyle/suppressions.xml")]
     sourceSets = [sourceSets.main]
 }
 
@@ -21,21 +21,12 @@ pmd {
     sourceSets = [sourceSets.main]
 }
 
-tasks.matching {task -> task.name.startsWith('spotbugs')}.forEach {
-    it.reports {
-        html.enabled = true
-        xml.enabled = false
-    }
-}
-
 jacoco {
     toolVersion = "${jacoco_plugin_version}"
 }
 
 def jacocoExcludes = [
     'com/sivalabs/todolist/*Application.*',
-    //'com/sivalabs/todolist/config/**',
-    //'com/sivalabs/todolist/entity/**'
 ]
 
 jacocoTestReport {
@@ -70,8 +61,7 @@ jacocoTestCoverageVerification {
     }
 }
 
-integrationTest.finalizedBy jacocoTestReport
-check.dependsOn jacocoTestCoverageVerification
+check.dependsOn jacocoTestReport, jacocoTestCoverageVerification
 
 file("sonar-project.properties").withReader {
     Properties sonarProperties = new Properties()

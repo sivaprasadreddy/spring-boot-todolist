@@ -8,25 +8,24 @@ import org.testcontainers.containers.PostgreSQLContainer;
 
 @Slf4j
 public class PostgreSQLContainerInitializer
-    implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+        implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     private static final PostgreSQLContainer<?> sqlContainer;
 
     static {
-        sqlContainer = new PostgreSQLContainer<>("postgres:12-alpine")
-            .withDatabaseName("integration-tests-db")
-            .withUsername("username")
-            .withPassword("password");
+        sqlContainer =
+                new PostgreSQLContainer<>("postgres:12-alpine")
+                        .withDatabaseName("integration-tests-db")
+                        .withUsername("username")
+                        .withPassword("password");
         sqlContainer.start();
     }
 
     public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
         TestPropertyValues.of(
-            "spring.datasource.url=" + sqlContainer.getJdbcUrl(),
-            "spring.datasource.username=" + sqlContainer.getUsername(),
-            "spring.datasource.password=" + sqlContainer.getPassword()
-        ).applyTo(configurableApplicationContext.getEnvironment());
+                        "spring.datasource.url=" + sqlContainer.getJdbcUrl(),
+                        "spring.datasource.username=" + sqlContainer.getUsername(),
+                        "spring.datasource.password=" + sqlContainer.getPassword())
+                .applyTo(configurableApplicationContext.getEnvironment());
     }
-
 }
-
