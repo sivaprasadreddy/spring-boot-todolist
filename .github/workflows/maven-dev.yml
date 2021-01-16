@@ -3,9 +3,7 @@ name: Dev Branch CI
 on:
   push:
     branches:
-      - '*'
-      - '!master'
-      - '!release'
+      - 'maven-dev'
 
 jobs:
   build:
