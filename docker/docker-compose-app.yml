@@ -2,7 +2,7 @@ version: '3.8'
 services:
 
   spring-boot-todolist:
-    build: .
+    build: ..
     image: sivaprasadreddy/spring-boot-todolist
     environment:
       - SPRING_PROFILES_ACTIVE=docker

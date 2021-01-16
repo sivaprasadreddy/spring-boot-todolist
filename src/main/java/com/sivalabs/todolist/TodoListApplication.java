@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Slf4j
 @SpringBootApplication
-@EnableConfigurationProperties({ ApplicationProperties.class})
+@EnableConfigurationProperties({ApplicationProperties.class})
 @EnableScheduling
 public class TodoListApplication {
 
