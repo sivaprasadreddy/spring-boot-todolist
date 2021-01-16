@@ -8,7 +8,7 @@ def jacocoMinCoverageRequired = 0.80
 checkstyle {
     toolVersion "${checkstyle_version}"
     maxWarnings = 0
-    configFile = file("${project.rootDir}/build-config/checkstyle/checkstyle.xml")
+    configFile = file("${project.rootDir}/build-config/checkstyle/gradle-checkstyle.xml")
     configProperties = ["suppressionFile" : file("${project.rootDir}/build-config/checkstyle/suppressions.xml")]
     sourceSets = [sourceSets.main]
 }
