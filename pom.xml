@@ -22,7 +22,7 @@
         <spring-cloud.version>2020.0.0</spring-cloud.version>
         <swagger.version>3.0.0</swagger.version>
         <commons-lang3.version>3.10</commons-lang3.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
 
         <bootstrap.version>4.4.1</bootstrap.version>
         <font_awesome.version>5.8.1</font_awesome.version>
