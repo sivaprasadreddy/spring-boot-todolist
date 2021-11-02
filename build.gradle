@@ -46,6 +46,7 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     implementation "org.webjars:bootstrap:${bootstrap_version}"
+    implementation "org.webjars:jquery:${jquery_version}"
     implementation "org.webjars:font-awesome:${font_awesome_version}"
     implementation "org.webjars:vue:${vue_version}"
     implementation "io.springfox:springfox-boot-starter:${swagger_version}"
