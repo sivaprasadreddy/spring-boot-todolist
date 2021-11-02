@@ -37,5 +37,4 @@ out/
 ### VS Code ###
 .vscode/
 
-
-/deployment/.vagrant
+*.pid

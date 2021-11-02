@@ -28,7 +28,7 @@ public class SwaggerConfig {
                 "SivaLabs TodoList REST API using SpringBoot",
                 "1.0.0",
                 "Terms of service",
-                new Contact("Siva", "http://sivalabs.in", "admin@sivalabs.in"),
+                new Contact("Siva", "https://sivalabs.in", "admin@sivalabs.in"),
                 "MIT License",
                 "https://opensource.org/licenses/MIT",
                 Collections.emptyList());
