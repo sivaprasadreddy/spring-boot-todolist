@@ -78,4 +78,4 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            name: todolist-k8s-configmap
+            name: todolist-configmap

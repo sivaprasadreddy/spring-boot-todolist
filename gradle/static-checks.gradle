@@ -1,25 +1,7 @@
-apply plugin: 'checkstyle'
-apply plugin: 'pmd'
 apply plugin: 'jacoco'
 apply plugin: "org.sonarqube"
 
 def jacocoMinCoverageRequired = 0.80
-
-checkstyle {
-    toolVersion "${checkstyle_version}"
-    maxWarnings = 0
-    configFile = file("${project.rootDir}/build-config/checkstyle/gradle-checkstyle.xml")
-    configProperties = ["suppressionFile" : file("${project.rootDir}/build-config/checkstyle/suppressions.xml")]
-    sourceSets = [sourceSets.main]
-}
-
-pmd {
-    toolVersion = "${pmd_version}"
-    consoleOutput = true
-    ruleSets = []
-    ruleSetFiles = files("${project.rootDir}/build-config/pmd/pmd-ruleset.xml")
-    sourceSets = [sourceSets.main]
-}
 
 jacoco {
     toolVersion = "${jacoco_plugin_version}"

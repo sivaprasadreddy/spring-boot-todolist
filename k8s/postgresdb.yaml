@@ -1,16 +1,5 @@
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: todolist-postgres-pv-claim
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 4Gi
----
-apiVersion: v1
 kind: Service
 metadata:
   name: todolist-postgres-svc
@@ -58,14 +47,4 @@ spec:
                 configMapKeyRef:
                   name: todolist-configmap
                   key: postgres_database
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
-
-          volumeMounts:
-            - name: postgres-storage
-              mountPath: /var/lib/postgresql/data
-      volumes:
-        - name: postgres-storage
-          persistentVolumeClaim:
-            claimName: todolist-postgres-pv-claim
 
