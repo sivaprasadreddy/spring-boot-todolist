@@ -1,4 +1,4 @@
-name: Master Branch CI
+name: Gradle Master Branch CI
 
 on:
   push:

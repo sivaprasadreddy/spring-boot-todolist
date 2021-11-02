@@ -1,4 +1,4 @@
-name: Dev Branch CI
+name: Gradle Dev Branch CI
 
 on:
   push:
