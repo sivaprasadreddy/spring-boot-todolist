@@ -1,25 +1,54 @@
 #!/bin/bash
-declare docker_username="sivaprasadreddy"
-declare docker_image_name="spring-boot-todolist"
-declare IMAGE=${docker_username}/${docker_image_name}
 
-function docker_build() {
-  echo "Building docker image"
-  #./mvnw spring-boot:build-image -DskipTests
-  #./gradlew bootBuildImage
-  docker build -t ${IMAGE} .
-  if [[ $# -gt 0 ]]; then
-    docker tag ${IMAGE}:latest ${IMAGE}:"$1"
-    echo "Tagged with latest & $1"
-  fi
+declare project_dir=$(dirname $0)
+declare project_version='0.0.1'
+declare dc_app=${project_dir}/docker/docker-compose.yml
+
+function start() {
+    build_api
+    echo "Starting docker containers...."
+    docker-compose -f ${dc_app} up --build --force-recreate -d
+    docker-compose -f ${dc_app} logs -f
 }
 
-function docker_push() {
-  docker_build $@
-  docker push ${IMAGE}
+function stop() {
+    echo "Stopping docker containers...."
+    docker-compose -f ${dc_app} stop
+    docker-compose -f ${dc_app} rm -f
 }
 
-action="docker_build"
+function restart() {
+    stop
+    sleep 5
+    start
+}
+function build_api() {
+    ./mvnw clean package -DskipTests
+}
+
+function jibBuild() {
+    ./mvnw clean package -DskipTests jib:build
+}
+
+function bpBuild() {
+    ./mvnw -DskipTests spring-boot:build-image
+}
+
+function pushImages() {
+    bpBuild
+    docker tag sivaprasadreddy/spring-boot-todolist sivaprasadreddy/spring-boot-todolist:${project_version}
+    docker push sivaprasadreddy/spring-boot-todolist --all-tags
+}
+
+function k8s_deploy() {
+    kubectl apply -f k8s/
+}
+
+function k8s_undeploy() {
+    kubectl delete -f k8s/
+}
+
+action="start"
 
 if [[ "$#" != "0"  ]]
 then
