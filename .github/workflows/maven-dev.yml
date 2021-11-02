@@ -1,4 +1,4 @@
-name: Dev Branch CI
+name: Maven Dev Branch CI
 
 on:
   push:
