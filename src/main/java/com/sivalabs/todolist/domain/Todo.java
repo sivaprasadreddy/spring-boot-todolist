@@ -1,6 +1,5 @@
-package com.sivalabs.todolist.entity;
+package com.sivalabs.todolist.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -25,7 +24,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Todo implements Serializable {
     @Id
-    @SequenceGenerator(name = "todo_id_generator", sequenceName = "todo_id_seq", allocationSize = 1)
+    @SequenceGenerator(
+            name = "todo_id_generator",
+            sequenceName = "todo_id_seq",
+            allocationSize = 10)
     @GeneratedValue(generator = "todo_id_generator")
     private Long id;
 
@@ -33,11 +35,9 @@ public class Todo implements Serializable {
     @NotEmpty
     private String content;
 
-    @JsonProperty("created_at")
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    @JsonProperty("updated_at")
     @Column(insertable = false)
     private LocalDateTime updatedAt;
 

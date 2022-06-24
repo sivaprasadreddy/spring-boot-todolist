@@ -12,8 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sivalabs.todolist.entity.Todo;
-import com.sivalabs.todolist.service.TodoService;
+import com.sivalabs.todolist.domain.Todo;
+import com.sivalabs.todolist.domain.TodoService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +66,7 @@ class TodoRestControllerUnitTest {
                                 .content(objectMapper.writeValueAsString(todo)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.content", is(todo.getContent())))
-                .andExpect(jsonPath("$.created_at", notNullValue()));
+                .andExpect(jsonPath("$.createdAt", notNullValue()));
     }
 
     @Test

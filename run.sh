@@ -1,7 +1,6 @@
 #!/bin/bash
 
 declare project_dir=$(dirname $0)
-declare project_version='0.0.1'
 declare dc_app=${project_dir}/docker/docker-compose.yml
 
 function start() {
@@ -36,8 +35,8 @@ function bpBuild() {
 
 function pushImages() {
     bpBuild
-    docker tag sivaprasadreddy/spring-boot-todolist sivaprasadreddy/spring-boot-todolist:${project_version}
-    docker push sivaprasadreddy/spring-boot-todolist --all-tags
+    docker tag sivaprasadreddy/spring-boot-todolist sivaprasadreddy/spring-boot-todolist
+    docker push sivaprasadreddy/spring-boot-todolist
 }
 
 function k8s_deploy() {

@@ -11,8 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sivalabs.todolist.common.AbstractIntegrationTest;
-import com.sivalabs.todolist.entity.Todo;
-import com.sivalabs.todolist.repo.TodoRepository;
+import com.sivalabs.todolist.domain.Todo;
+import com.sivalabs.todolist.domain.TodoRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 class TodoRestControllerTest extends AbstractIntegrationTest {
-
     @Autowired private TodoRepository todoRepository;
-
     @Autowired private ObjectMapper objectMapper;
 
     private List<Todo> todoList;
@@ -59,7 +57,7 @@ class TodoRestControllerTest extends AbstractIntegrationTest {
                                 .content(objectMapper.writeValueAsString(todo)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.content", is(todo.getContent())))
-                .andExpect(jsonPath("$.created_at", notNullValue()));
+                .andExpect(jsonPath("$.createdAt", notNullValue()));
     }
 
     @Test

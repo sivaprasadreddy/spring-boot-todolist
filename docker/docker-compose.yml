@@ -1,8 +1,8 @@
-version: '3.5'
+version: '3.8'
 services:
 
   todolist-db:
-    image: postgres:12.3
+    image: postgres:14-alpine
     environment:
       - POSTGRES_USER=siva
       - POSTGRES_PASSWORD=secret
@@ -23,5 +23,4 @@ services:
       - SPRING_DATASOURCE_PASSWORD=secret
     ports:
       - "8080:8080"
-      - "8787:8787"
-    restart: always
+    restart: unless-stopped

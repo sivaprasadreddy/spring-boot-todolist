@@ -14,7 +14,7 @@ class HomeControllerTest {
     @Autowired private MockMvc mockMvc;
 
     @Test
-    void shouldFetchAllTodos() throws Exception {
+    void shouldRenderIndexPage() throws Exception {
         this.mockMvc
                 .perform(get("/"))
                 .andExpect(status().isOk())

@@ -1,7 +1,7 @@
 package com.sivalabs.todolist.config;
 
-import com.sivalabs.todolist.entity.Todo;
-import com.sivalabs.todolist.service.TodoService;
+import com.sivalabs.todolist.domain.Todo;
+import com.sivalabs.todolist.domain.TodoService;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
