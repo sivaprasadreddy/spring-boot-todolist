@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: spring-boot-todolist
-          image: sivaprasadreddy/spring-boot-todolist:latest
+          image: sivaprasadreddy/spring-boot-todolist
           ports:
             - containerPort: 8080
           env:

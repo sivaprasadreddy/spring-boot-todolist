@@ -16,8 +16,8 @@ group = 'com.sivalabs'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 configurations {
@@ -49,14 +49,12 @@ dependencies {
     implementation "org.webjars:jquery:${jquery_version}"
     implementation "org.webjars:font-awesome:${font_awesome_version}"
     implementation "org.webjars:vue:${vue_version}"
-    implementation "io.springfox:springfox-boot-starter:${swagger_version}"
+    implementation "org.springdoc:springdoc-openapi-webflux-ui:${swagger_version}"
 
     implementation "org.apache.commons:commons-lang3:${commons_lang_version}"
     implementation "commons-io:commons-io:${commons_io_version}"
 
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.testcontainers:junit-jupiter"
     testImplementation "org.testcontainers:postgresql"
 }
@@ -82,12 +80,11 @@ bootBuildImage {
 
 jib {
     from {
-        image = 'gcr.io/distroless/java:11'
-        //image = 'openjdk:11-jdk-slim'
+        image = 'eclipse-temurin:17-jre-focal'
     }
     to {
         image = 'sivaprasadreddy/spring-boot-todolist'
-        tags = ['1.0.0', 'latest']
+        tags = ['latest']
     }
     container {
         jvmFlags = ['-Xms512m', '-Xdebug']
@@ -110,6 +107,7 @@ gitProperties {
 }
 
 googleJavaFormat {
+    toolVersion = '1.15.0'
     options style: 'AOSP'
 }
 
@@ -141,15 +139,16 @@ task integrationTest(type: Test) {
 check.dependsOn integrationTest
 
 task testReport(type: TestReport) {
-    destinationDir = file("$buildDir/reports/tests")
+    destinationDirectory = file("$buildDir/reports/tests")
     reportOn test
+
 }
 
 task integrationTestReport(type: TestReport) {
-    destinationDir = file("$buildDir/reports/tests")
+    destinationDirectory = file("$buildDir/reports/tests")
     reportOn integrationTest
 }
 
 wrapper {
-    gradleVersion = "6.7.1"
+    gradleVersion = "7.4.1"
 }

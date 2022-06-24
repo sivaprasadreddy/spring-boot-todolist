@@ -14,7 +14,7 @@ public class PostgreSQLContainerInitializer
 
     static {
         sqlContainer =
-                new PostgreSQLContainer<>("postgres:12-alpine")
+                new PostgreSQLContainer<>("postgres:14-alpine")
                         .withDatabaseName("integration-tests-db")
                         .withUsername("username")
                         .withPassword("password");

@@ -1,7 +1,5 @@
-package com.sivalabs.todolist.service;
+package com.sivalabs.todolist.domain;
 
-import com.sivalabs.todolist.entity.Todo;
-import com.sivalabs.todolist.repo.TodoRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

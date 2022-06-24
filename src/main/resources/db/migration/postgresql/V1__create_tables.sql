@@ -1,4 +1,4 @@
-create sequence todo_id_seq start with 1 increment by 1;
+create sequence todo_id_seq start with 1 increment by 10;
 
 create table todos (
     id bigint DEFAULT nextval('todo_id_seq') not null,

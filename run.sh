@@ -36,8 +36,8 @@ function bpBuild() {
 
 function pushImages() {
     bpBuild
-    docker tag sivaprasadreddy/spring-boot-todolist sivaprasadreddy/spring-boot-todolist:${project_version}
-    docker push sivaprasadreddy/spring-boot-todolist --all-tags
+    docker tag sivaprasadreddy/spring-boot-todolist sivaprasadreddy/spring-boot-todolist
+    docker push sivaprasadreddy/spring-boot-todolist
 }
 
 function k8s_deploy() {
