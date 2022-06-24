@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Run Unit & Integration Tests
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -29,6 +29,6 @@ jobs:
         run: ./mvnw verify
 
       - name: SonarCloud Scan
-        run: ./mvnw properties:read-project-properties sonar:sonar -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw compile sonar:sonar -Dsonar.login=${{ secrets.SONAR_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
