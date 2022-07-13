@@ -5,7 +5,7 @@ plugins {
     id 'io.spring.dependency-management'
     id "com.gorylenko.gradle-git-properties"
     id "com.github.sherter.google-java-format"
-    id 'com.google.cloud.tools.jib' version '3.1.4'
+    id "com.google.cloud.tools.jib"
     id "org.sonarqube" apply false
 }
 
@@ -13,7 +13,7 @@ apply plugin: 'idea'
 apply from: 'gradle/static-checks.gradle'
 
 group = 'com.sivalabs'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -49,7 +49,7 @@ dependencies {
     implementation "org.webjars:jquery:${jquery_version}"
     implementation "org.webjars:font-awesome:${font_awesome_version}"
     implementation "org.webjars:vue:${vue_version}"
-    implementation "org.springdoc:springdoc-openapi-webflux-ui:${swagger_version}"
+    implementation "org.springdoc:springdoc-openapi-ui:${swagger_version}"
 
     implementation "org.apache.commons:commons-lang3:${commons_lang_version}"
     implementation "commons-io:commons-io:${commons_io_version}"
@@ -75,7 +75,7 @@ bootJar {
 }
 
 bootBuildImage {
-    imageName = "sivaprasadreddy/spring-boot-todolist"
+    imageName = "sivaprasadreddy/spring-boot-todolist-gradle"
 }
 
 jib {
@@ -83,7 +83,7 @@ jib {
         image = 'eclipse-temurin:17-jre-focal'
     }
     to {
-        image = 'sivaprasadreddy/spring-boot-todolist'
+        image = 'sivaprasadreddy/spring-boot-todolist-gradle'
         tags = ['latest']
     }
     container {
@@ -103,11 +103,11 @@ bootRun {
 
 gitProperties {
     failOnNoGitDirectory = false
-    keys = ["git.branch", "git.commit.id.abbrev", "git.commit.id.describe"]
+    keys = ["git.branch", "git.commit.id.abbrev", "git.commit.user.name", "git.commit.message.full"]
 }
 
 googleJavaFormat {
-    toolVersion = '1.15.0'
+    toolVersion = '1.12.0'
     options style: 'AOSP'
 }
 

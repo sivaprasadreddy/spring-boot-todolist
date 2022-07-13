@@ -1,0 +1,40 @@
+name: Gradle Branch CI
+
+on:
+  push:
+    branches:
+      - 'gradle'
+jobs:
+  build:
+    name: Gradle Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distribution: [ 'temurin' ]
+        java: [ '17', '18' ]
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/spring-boot-todolist-gradle
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Java ${{ matrix.java }} (${{ matrix.distribution }})
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: ${{ matrix.distribution }}
+          cache: 'gradle'
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Run SonarQube Checks
+        run: ./gradlew sonarqube
+
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Build and Publish Docker Image
+        run: |
+          ./gradlew jibDockerBuild -Djib.to.image=$DOCKER_IMAGE_NAME
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker push $DOCKER_IMAGE_NAME

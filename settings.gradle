@@ -5,6 +5,7 @@ pluginManagement {
         id 'com.gorylenko.gradle-git-properties' version "${git_properties_plugin_version}"
         id 'org.sonarqube' version "${sonarqube_plugin_version}"
         id "com.github.sherter.google-java-format" version "${google_java_format_plugin_version}"
+        id 'com.google.cloud.tools.jib' version "${jib_plugin_version}"
     }
 }
 rootProject.name = 'spring-boot-todolist'
