@@ -23,6 +23,7 @@
         <springdoc-openapi.version>1.6.9</springdoc-openapi.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-io.version>2.11.0</commons-io.version>
+        <webjars-locator.version>0.45</webjars-locator.version>
         <bootstrap.version>5.1.3</bootstrap.version>
         <jquery.version>3.6.0</jquery.version>
         <font_awesome.version>6.1.0</font_awesome.version>
@@ -105,6 +106,11 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator</artifactId>
+            <version>${webjars-locator.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
