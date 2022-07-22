@@ -32,7 +32,7 @@
         <spotless.version>2.23.0</spotless.version>
         <properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
         <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
-        <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
         <jacoco.minimum.coverage>0.80</jacoco.minimum.coverage>
         <jacoco.utReportFolder>${project.build.directory}/jacoco/test</jacoco.utReportFolder>
