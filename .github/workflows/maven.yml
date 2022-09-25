@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         distribution: [ 'temurin' ]
-        java: [ '17' ]
+        java: [ '18' ]
     env:
       DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/spring-boot-todolist
     steps:
