@@ -2,8 +2,8 @@ package com.sivalabs.todolist.web.controller;
 
 import com.sivalabs.todolist.domain.Todo;
 import com.sivalabs.todolist.domain.TodoService;
+import jakarta.validation.Valid;
 import java.util.List;
-import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
