@@ -18,7 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <java.version>18</java.version>
+        <java.version>19</java.version>
         <spring-cloud.version>2022.0.0-M4</spring-cloud.version>
         <springdoc-openapi.version>1.6.11</springdoc-openapi.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
@@ -44,6 +44,7 @@
         <junit.itReportFolder>${project.testresult.directory}/integrationTest</junit.itReportFolder>
         <dockerhub.username>sivaprasadreddy</dockerhub.username>
         <dockerhub.imageName>${dockerhub.username}/${project.artifactId}</dockerhub.imageName>
+        <java-base-image>eclipse-temurin:18-jre-focal</java-base-image>
     </properties>
 
     <dependencies>
@@ -196,12 +197,13 @@
                 <version>${jib-maven-plugin.version}</version>
                 <configuration>
                     <from>
-                        <image>eclipse-temurin:18-jre-focal</image>
+                        <image>${java-base-image}</image>
                     </from>
                     <to>
                         <image>${dockerhub.imageName}</image>
                         <tags>
                             <tag>latest</tag>
+                            <tag>${project.version}</tag>
                         </tags>
                     </to>
                     <container>
