@@ -44,7 +44,7 @@
         <junit.itReportFolder>${project.testresult.directory}/integrationTest</junit.itReportFolder>
         <dockerhub.username>sivaprasadreddy</dockerhub.username>
         <dockerhub.imageName>${dockerhub.username}/${project.artifactId}</dockerhub.imageName>
-        <java-base-image>eclipse-temurin:18-jre-focal</java-base-image>
+        <java-base-image>eclipse-temurin:19-jre-focal</java-base-image>
     </properties>
 
     <dependencies>
