@@ -10,12 +10,23 @@ plugins {
     id 'org.sonarqube' version "3.0"
 }
 
+def dockerBaseImage = 'eclipse-temurin:17-jre-focal'
+def dockerImageName = 'sivaprasadreddy/spring-boot-todolist-gradle'
+def dockerImageTags = ['latest', "${project.version}"]
+def appMainClass = 'com.sivalabs.todolist.TodoListApplication'
+def googleJavaFormatToolVersion = "1.12.0"
 def jacocoToolVersion = "0.8.8"
 def jacocoMinCoverageRequired = 0.30
-def googleJavaFormatToolVersion = "1.12.0"
+def jacocoExcludes = [
+    'com/sivalabs/todolist/*Application.*',
+]
 
 group = 'com.sivalabs'
 version = '0.0.1'
+
+wrapper {
+    gradleVersion = "7.5.1"
+}
 
 java {
     toolchain {
@@ -90,21 +101,21 @@ springBoot {
 }
 
 bootBuildImage {
-    imageName = "sivaprasadreddy/spring-boot-todolist-gradle"
-    tags = ['latest', "${project.version}"]
+    imageName = dockerImageName
+    tags = dockerImageTags
 }
 
 jib {
     from {
-        image = 'eclipse-temurin:17-jre-focal'
+        image = dockerBaseImage
     }
     to {
-        image = 'sivaprasadreddy/spring-boot-todolist-gradle'
-        tags = ['latest', "${project.version}"]
+        image = dockerImageName
+        tags = dockerImageTags
     }
     container {
         jvmFlags = ['-Xms512m', '-Xdebug']
-        mainClass = 'com.sivalabs.todolist.TodoListApplication'
+        mainClass = appMainClass
         args = []
         ports = ['8080/tcp']
     }
@@ -144,10 +155,6 @@ test {
 jacoco {
     toolVersion = jacocoToolVersion
 }
-
-def jacocoExcludes = [
-    'com/sivalabs/todolist/*Application.*',
-]
 
 jacocoTestReport {
     executionData tasks.withType(Test)
@@ -195,8 +202,4 @@ file("sonar-project.properties").withReader {
             }
         }
     }
-}
-
-wrapper {
-    gradleVersion = "7.5.1"
 }

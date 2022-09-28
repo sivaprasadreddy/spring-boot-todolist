@@ -1,8 +1,11 @@
 #!/bin/bash
 
 declare project_dir=$(dirname $0)
-declare project_version='0.0.1'
 declare dc_app=${project_dir}/docker/docker-compose.yml
+
+function build_api() {
+    ./gradlew build -x test
+}
 
 function start() {
     build_api
@@ -22,9 +25,6 @@ function restart() {
     sleep 5
     start
 }
-function build_api() {
-    ./gradlew build -x test
-}
 
 function jibBuild() {
     ./gradlew jibDockerBuild
@@ -36,8 +36,7 @@ function bpBuild() {
 
 function pushImages() {
     bpBuild
-    docker tag sivaprasadreddy/spring-boot-todolist sivaprasadreddy/spring-boot-todolist
-    docker push sivaprasadreddy/spring-boot-todolist
+    docker push sivaprasadreddy/spring-boot-todolist-gradle --all-tags
 }
 
 function k8s_deploy() {

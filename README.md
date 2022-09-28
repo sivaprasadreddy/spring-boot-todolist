@@ -2,7 +2,7 @@
 
 A minimal SpringBoot application to try out new features.
 
-![Master Branch CI](https://github.com/sivaprasadreddy/spring-boot-todolist/workflows/Master%20Branch%20CI/badge.svg)
+[![Gradle Branch CI](https://github.com/sivaprasadreddy/spring-boot-todolist/actions/workflows/gradle.yml/badge.svg?branch=gradle)](https://github.com/sivaprasadreddy/spring-boot-todolist/actions/workflows/gradle.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=sivaprasadreddy_spring-boot-todolist&metric=alert_status)](https://sonarcloud.io/dashboard?id=sivaprasadreddy_spring-boot-todolist)
 
 ## Run using DockerCompose
@@ -16,17 +16,26 @@ A minimal SpringBoot application to try out new features.
 ## Running on Kubernetes
 
 ```shell script
-cd kind
-./create-cluster.sh
-cd ..
-./run.sh k8s_deploy
-./run.sh k8s_undeploy
-./kind/destroy-cluster.sh
+$ brew install kubectl
+$ brew install kind
+$ cd kind
+$ ./create-cluster.sh
+$ cd ..
+$ ./run.sh k8s_deploy
+$ ./run.sh k8s_undeploy
+$ ./kind/destroy-cluster.sh
 ```
+
+## Development using Skaffold
+
+```shell script
+$ brew install skaffold
+$ skaffold dev --port-forward --skip-tests=true
+```
+
 ### kubectl commands
 
 ```shell
-
 kubectl apply -f k8s/config.yaml
 kubectl apply -f k8s/postgresdb.yaml
 kubectl apply -f k8s/todolist.yaml
@@ -46,10 +55,4 @@ kubectl create configmap spring-boot-todolist --from-file=./k8s/application.prop
 kubectl create configmap todolist-k8s-configmap --from-file=./application.properties
 
 kubectl get configmap spring-boot-todolist -o yaml
-```
-
-## Development using Skaffold
-
-```shell script
-skaffold dev --port-forward --skip-tests=true
 ```
