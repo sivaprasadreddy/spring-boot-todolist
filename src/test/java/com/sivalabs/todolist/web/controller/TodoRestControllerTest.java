@@ -36,7 +36,7 @@ class TodoRestControllerTest extends AbstractIntegrationTest {
         this.todoList.add(new Todo(2L, "Second Todo", LocalDateTime.now(), null));
         this.todoList.add(new Todo(3L, "Third Todo", LocalDateTime.now(), null));
 
-        todoList = todoRepository.saveAll(todoList);
+        this.todoList = todoRepository.saveAll(todoList);
     }
 
     @Test

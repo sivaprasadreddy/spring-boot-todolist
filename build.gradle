@@ -1,23 +1,27 @@
 
 plugins {
-    id 'java-library'
-    id 'org.springframework.boot'
-    id 'io.spring.dependency-management'
-    id "com.gorylenko.gradle-git-properties"
-    id "com.github.sherter.google-java-format"
-    id "com.google.cloud.tools.jib"
-    id "org.sonarqube" apply false
+    id 'java'
+    id 'jacoco'
+    id 'org.springframework.boot' version '3.0.0-M5'
+    id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+    id 'com.gorylenko.gradle-git-properties' version "2.4.1"
+    id "com.github.sherter.google-java-format" version "0.9"
+    id 'com.google.cloud.tools.jib' version "3.3.0"
+    id 'org.sonarqube' version "3.0"
 }
 
-apply plugin: 'idea'
-apply from: 'gradle/static-checks.gradle'
+def jacocoToolVersion = "0.8.8"
+def jacocoMinCoverageRequired = 0.30
+def googleJavaFormatToolVersion = "1.12.0"
 
 group = 'com.sivalabs'
 version = '0.0.1'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+        vendor = JvmVendorSpec.ADOPTIUM
+    }
 }
 
 configurations {
@@ -30,6 +34,20 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven { url 'https://repo.spring.io/milestone' }
+}
+
+ext {
+    set('springCloudVersion', "2022.0.0-M4")
+    set('testcontainersVersion', "1.17.3")
+    set('webjarsLocatorVersion', "0.45")
+    set('bootstrapVersion', "5.2.0")
+    set('jqueryVersion', "3.6.1")
+    set('fontAwesomeVersion', "6.1.2")
+    set('vueVersion', "2.6.14")
+    set('springdocOpenApiVersion', "1.6.11")
+    set('commonsLang3Version', "3.12.0")
+    set('commonsIoVersion', "2.11.0")
+    set('archunitVersion', "1.0.0-rc1")
 }
 
 dependencies {
@@ -45,24 +63,25 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
-    implementation "org.webjars:bootstrap:${bootstrap_version}"
-    implementation "org.webjars:jquery:${jquery_version}"
-    implementation "org.webjars:font-awesome:${font_awesome_version}"
-    implementation "org.webjars:vue:${vue_version}"
-    implementation "org.springdoc:springdoc-openapi-ui:${swagger_version}"
-
-    implementation "org.apache.commons:commons-lang3:${commons_lang_version}"
-    implementation "commons-io:commons-io:${commons_io_version}"
+    implementation "org.webjars:webjars-locator:${webjarsLocatorVersion}"
+    implementation "org.webjars:bootstrap:${bootstrapVersion}"
+    implementation "org.webjars:jquery:${jqueryVersion}"
+    implementation "org.webjars:font-awesome:${fontAwesomeVersion}"
+    implementation "org.webjars:vue:${vueVersion}"
+    implementation "org.springdoc:springdoc-openapi-ui:${springdocOpenApiVersion}"
+    implementation "org.apache.commons:commons-lang3:${commonsLang3Version}"
+    implementation "commons-io:commons-io:${commonsIoVersion}"
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.testcontainers:junit-jupiter"
     testImplementation "org.testcontainers:postgresql"
+    testImplementation "com.tngtech.archunit:archunit-junit5:${archunitVersion}"
 }
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${spring_cloud_version}"
-        mavenBom "org.testcontainers:testcontainers-bom:${testcontainers_version}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
     }
 }
 
@@ -70,12 +89,9 @@ springBoot {
     buildInfo()
 }
 
-bootJar {
-    //launchScript()
-}
-
 bootBuildImage {
     imageName = "sivaprasadreddy/spring-boot-todolist-gradle"
+    tags = ['latest', "${project.version}"]
 }
 
 jib {
@@ -84,7 +100,7 @@ jib {
     }
     to {
         image = 'sivaprasadreddy/spring-boot-todolist-gradle'
-        tags = ['latest']
+        tags = ['latest', "${project.version}"]
     }
     container {
         jvmFlags = ['-Xms512m', '-Xdebug']
@@ -103,11 +119,15 @@ bootRun {
 
 gitProperties {
     failOnNoGitDirectory = false
-    keys = ["git.branch", "git.commit.id.abbrev", "git.commit.user.name", "git.commit.message.full"]
+    keys = ["git.branch",
+            "git.commit.id.abbrev",
+            "git.commit.user.name",
+            "git.commit.message.full"
+    ]
 }
 
 googleJavaFormat {
-    toolVersion = '1.12.0'
+    toolVersion = googleJavaFormatToolVersion
     options style: 'AOSP'
 }
 
@@ -115,40 +135,68 @@ check.dependsOn verifyGoogleJavaFormat
 
 test {
     useJUnitPlatform()
-    exclude "**/*IT*", "**/*IntegrationTest*", "**/*IntTest*"
     testLogging {
         events = ["PASSED", "FAILED", "SKIPPED"]
-        //showStandardStreams = true
+        showStandardStreams = true
         exceptionFormat = "full"
     }
 }
+jacoco {
+    toolVersion = jacocoToolVersion
+}
 
-task integrationTest(type: Test) {
-    useJUnitPlatform()
+def jacocoExcludes = [
+    'com/sivalabs/todolist/*Application.*',
+]
 
-    include "**/*IT*", "**/*IntegrationTest*", "**/*IntTest*"
-    shouldRunAfter test
+jacocoTestReport {
+    executionData tasks.withType(Test)
+    classDirectories.from = files(sourceSets.main.output.classesDirs)
+    sourceDirectories.from = files(sourceSets.main.java.srcDirs)
 
-    testLogging {
-        events = ["PASSED", "FAILED", "SKIPPED"]
-        //showStandardStreams = true
-        exceptionFormat = "full"
+    afterEvaluate {
+        getClassDirectories().setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: jacocoExcludes)
+        }))
+    }
+
+    reports {
+        xml.required = true
+        html.required = true
     }
 }
 
-check.dependsOn integrationTest
+jacocoTestCoverageVerification {
+    dependsOn "test"
+    executionData fileTree(project.buildDir.absolutePath).include("jacoco/*.exec")
 
-task testReport(type: TestReport) {
-    destinationDirectory = file("$buildDir/reports/tests")
-    reportOn test
-
+    violationRules {
+        rule {
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = jacocoMinCoverageRequired
+            }
+            excludes = jacocoExcludes
+        }
+    }
 }
 
-task integrationTestReport(type: TestReport) {
-    destinationDirectory = file("$buildDir/reports/tests")
-    reportOn integrationTest
+check.dependsOn jacocoTestReport, jacocoTestCoverageVerification
+
+file("sonar-project.properties").withReader {
+    Properties sonarProperties = new Properties()
+    sonarProperties.load(it)
+
+    sonarProperties.each { key, value ->
+        sonarqube {
+            properties {
+                property key, value
+            }
+        }
+    }
 }
 
 wrapper {
-    gradleVersion = "7.4.1"
+    gradleVersion = "7.5.1"
 }

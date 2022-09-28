@@ -1,11 +1,7 @@
 pluginManagement {
-    plugins {
-        id 'org.springframework.boot' version "${spring_boot_version}"
-        id 'io.spring.dependency-management' version "${spring_dependency_management_version}"
-        id 'com.gorylenko.gradle-git-properties' version "${git_properties_plugin_version}"
-        id 'org.sonarqube' version "${sonarqube_plugin_version}"
-        id "com.github.sherter.google-java-format" version "${google_java_format_plugin_version}"
-        id 'com.google.cloud.tools.jib' version "${jib_plugin_version}"
+    repositories {
+        maven { url 'https://repo.spring.io/milestone' }
+        gradlePluginPortal()
     }
 }
 rootProject.name = 'spring-boot-todolist'
