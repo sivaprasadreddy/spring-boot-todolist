@@ -45,6 +45,7 @@
         <dockerhub.username>sivaprasadreddy</dockerhub.username>
         <dockerhub.imageName>${dockerhub.username}/${project.artifactId}</dockerhub.imageName>
         <java-base-image>eclipse-temurin:19-jre-focal</java-base-image>
+        <archunit.version>1.0.0-rc1</archunit.version>
     </properties>
 
     <dependencies>
@@ -147,6 +148,12 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit</artifactId>
+            <version>${archunit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
