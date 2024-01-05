@@ -45,7 +45,7 @@
         <dockerhub.username>sivaprasadreddy</dockerhub.username>
         <dockerhub.imageName>${dockerhub.username}/${project.artifactId}</dockerhub.imageName>
         <java-base-image>eclipse-temurin:19-jre-focal</java-base-image>
-        <archunit.version>1.0.0-rc1</archunit.version>
+        <archunit.version>1.2.1</archunit.version>
     </properties>
 
     <dependencies>
