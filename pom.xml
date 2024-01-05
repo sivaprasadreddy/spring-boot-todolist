@@ -22,7 +22,7 @@
         <spring-cloud.version>2022.0.0-M4</spring-cloud.version>
         <springdoc-openapi.version>1.6.11</springdoc-openapi.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
-        <commons-io.version>2.11.0</commons-io.version>
+        <commons-io.version>2.15.1</commons-io.version>
         <webjars-locator.version>0.45</webjars-locator.version>
         <bootstrap.version>5.2.0</bootstrap.version>
         <jquery.version>3.6.1</jquery.version>
