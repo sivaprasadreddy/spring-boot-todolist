@@ -21,7 +21,7 @@
         <java.version>21</java.version>
         <springdoc-openapi.version>1.7.0</springdoc-openapi.version>
         <commons-io.version>2.15.1</commons-io.version>
-        <webjars-locator.version>0.46</webjars-locator.version>
+        <webjars-locator.version>0.50</webjars-locator.version>
         <bootstrap.version>5.3.2</bootstrap.version>
         <jquery.version>3.6.4</jquery.version>
         <font_awesome.version>6.5.1</font_awesome.version>
