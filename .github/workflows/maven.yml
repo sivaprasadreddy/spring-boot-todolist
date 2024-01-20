@@ -31,7 +31,7 @@ jobs:
 
       - if: ${{ github.ref == 'refs/heads/main' }}
         name: SonarCloud Scan
-        run: ./mvnw compile sonar:sonar -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw compile sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
