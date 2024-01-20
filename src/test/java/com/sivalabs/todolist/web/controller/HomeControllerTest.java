@@ -11,13 +11,11 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(controllers = HomeController.class)
 class HomeControllerTest {
 
-    @Autowired private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
     @Test
     void shouldRenderIndexPage() throws Exception {
-        this.mockMvc
-                .perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("index.html"));
+        this.mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(view().name("index.html"));
     }
 }

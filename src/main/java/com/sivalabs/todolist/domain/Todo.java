@@ -24,10 +24,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Todo implements Serializable {
     @Id
-    @SequenceGenerator(
-            name = "todo_id_generator",
-            sequenceName = "todo_id_seq",
-            allocationSize = 10)
+    @SequenceGenerator(name = "todo_id_generator", sequenceName = "todo_id_seq", allocationSize = 10)
     @GeneratedValue(generator = "todo_id_generator")
     private Long id;
 

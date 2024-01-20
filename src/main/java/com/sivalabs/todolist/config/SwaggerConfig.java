@@ -18,10 +18,9 @@ public class SwaggerConfig {
                 .title("SpringBoot TodoList API")
                 .description("SpringBoot TodoList REST API")
                 .version("0.0.1")
-                .contact(
-                        new Contact()
-                                .email("sivalabs@sivalabs.in")
-                                .url("https://sivalabs.in")
-                                .name("SivaLabs"));
+                .contact(new Contact()
+                        .email("sivalabs@sivalabs.in")
+                        .url("https://sivalabs.in")
+                        .name("SivaLabs"));
     }
 }

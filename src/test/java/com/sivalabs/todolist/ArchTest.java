@@ -12,10 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 class ArchTest {
 
-    JavaClasses importedClasses =
-            new ClassFileImporter()
-                    .withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_TESTS)
-                    .importPackages("com.sivalabs.todolist");
+    JavaClasses importedClasses = new ClassFileImporter()
+            .withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_TESTS)
+            .importPackages("com.sivalabs.todolist");
 
     @Test
     void domainShouldNotDependOnWebLayer() {

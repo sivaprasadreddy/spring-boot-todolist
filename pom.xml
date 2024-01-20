@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.0-M5</version>
+        <version>3.2.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.sivalabs</groupId>
@@ -18,22 +18,20 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <java.version>19</java.version>
-        <spring-cloud.version>2022.0.0-M4</spring-cloud.version>
-        <springdoc-openapi.version>1.6.11</springdoc-openapi.version>
-        <commons-lang3.version>3.12.0</commons-lang3.version>
-        <commons-io.version>2.11.0</commons-io.version>
-        <webjars-locator.version>0.45</webjars-locator.version>
-        <bootstrap.version>5.2.0</bootstrap.version>
-        <jquery.version>3.6.1</jquery.version>
-        <font_awesome.version>6.1.2</font_awesome.version>
+        <java.version>21</java.version>
+        <springdoc-openapi.version>1.7.0</springdoc-openapi.version>
+        <commons-io.version>2.15.1</commons-io.version>
+        <webjars-locator.version>0.46</webjars-locator.version>
+        <bootstrap.version>5.3.2</bootstrap.version>
+        <jquery.version>3.6.4</jquery.version>
+        <font_awesome.version>6.5.1</font_awesome.version>
         <vue.version>2.6.14</vue.version>
-        <testcontainers.version>1.17.3</testcontainers.version>
-        <spotless.version>2.27.0</spotless.version>
+        <testcontainers.version>1.19.3</testcontainers.version>
+        <spotless.version>2.42.0</spotless.version>
         <properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
-        <jib-maven-plugin.version>3.3.0</jib-maven-plugin.version>
+        <jib-maven-plugin.version>3.4.0</jib-maven-plugin.version>
         <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
-        <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
         <jacoco.minimum.coverage>0.80</jacoco.minimum.coverage>
         <jacoco.utReportFolder>${project.build.directory}/jacoco/test</jacoco.utReportFolder>
         <jacoco.utReportFile>${jacoco.utReportFolder}/test.exec</jacoco.utReportFile>
@@ -45,7 +43,7 @@
         <dockerhub.username>sivaprasadreddy</dockerhub.username>
         <dockerhub.imageName>${dockerhub.username}/${project.artifactId}</dockerhub.imageName>
         <java-base-image>eclipse-temurin:19-jre-focal</java-base-image>
-        <archunit.version>1.0.0-rc1</archunit.version>
+        <archunit.version>1.2.1</archunit.version>
     </properties>
 
     <dependencies>
@@ -102,7 +100,6 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -141,6 +138,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
@@ -157,25 +159,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers-bom</artifactId>
-                <version>${testcontainers.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <plugins>
@@ -381,10 +364,12 @@
                 <version>${spotless.version}</version>
                 <configuration>
                     <java>
-                        <googleJavaFormat>
-                            <version>1.12.0</version>
-                            <style>AOSP</style>
-                        </googleJavaFormat>
+                        <importOrder />
+                        <removeUnusedImports />
+                        <palantirJavaFormat>
+                            <version>2.35.0</version>
+                        </palantirJavaFormat>
+                        <formatAnnotations />
                     </java>
                 </configuration>
                 <executions>

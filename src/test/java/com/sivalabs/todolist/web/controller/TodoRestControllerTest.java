@@ -21,8 +21,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 class TodoRestControllerTest extends AbstractIntegrationTest {
-    @Autowired private TodoRepository todoRepository;
-    @Autowired private ObjectMapper objectMapper;
+    @Autowired
+    private TodoRepository todoRepository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private List<Todo> todoList;
 
@@ -52,9 +55,7 @@ class TodoRestControllerTest extends AbstractIntegrationTest {
         Todo todo = new Todo(null, "New Todo", LocalDateTime.now(), null);
         this.mockMvc
                 .perform(
-                        post("/api/todos")
-                                .contentType(APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(todo)))
+                        post("/api/todos").contentType(APPLICATION_JSON).content(objectMapper.writeValueAsString(todo)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.content", is(todo.getContent())))
                 .andExpect(jsonPath("$.createdAt", notNullValue()));

@@ -13,14 +13,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 public class DataInitializer implements CommandLineRunner {
-    private static final List<String> SAMPLE_TODOS =
-            List.of(
-                    "Learn SpringBoot",
-                    "Learn VueJS",
-                    "Write blog post on GitHub Actions",
-                    "Learn Kubernetes",
-                    "Upgrade Blog",
-                    "Publish YouTube video on Quarkus");
+    private static final List<String> SAMPLE_TODOS = List.of(
+            "Learn SpringBoot",
+            "Learn VueJS",
+            "Write blog post on GitHub Actions",
+            "Learn Kubernetes",
+            "Upgrade Blog",
+            "Publish YouTube video on Quarkus");
 
     private final ApplicationProperties properties;
     private final TodoService todoService;
@@ -31,12 +30,11 @@ public class DataInitializer implements CommandLineRunner {
             log.info("Sample data initialization is disabled");
             return;
         }
-        SAMPLE_TODOS.forEach(
-                t -> {
-                    Todo todo = new Todo();
-                    todo.setContent(t);
-                    todo.setCreatedAt(LocalDateTime.now());
-                    todoService.saveTodo(todo);
-                });
+        SAMPLE_TODOS.forEach(t -> {
+            Todo todo = new Todo();
+            todo.setContent(t);
+            todo.setCreatedAt(LocalDateTime.now());
+            todoService.saveTodo(todo);
+        });
     }
 }

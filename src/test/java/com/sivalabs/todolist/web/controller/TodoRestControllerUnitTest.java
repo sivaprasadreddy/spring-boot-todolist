@@ -26,11 +26,14 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers = TodoRestController.class)
 class TodoRestControllerUnitTest {
-    @Autowired private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-    @MockBean private TodoService todoService;
+    @MockBean
+    private TodoService todoService;
 
-    @Autowired private ObjectMapper objectMapper;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private List<Todo> todoList;
 
@@ -55,15 +58,12 @@ class TodoRestControllerUnitTest {
 
     @Test
     void shouldCreateNewTodo() throws Exception {
-        given(todoService.saveTodo(any(Todo.class)))
-                .willAnswer((invocation) -> invocation.getArgument(0));
+        given(todoService.saveTodo(any(Todo.class))).willAnswer((invocation) -> invocation.getArgument(0));
 
         Todo todo = new Todo(null, "New Todo", LocalDateTime.now(), null);
         this.mockMvc
                 .perform(
-                        post("/api/todos")
-                                .contentType(APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(todo)))
+                        post("/api/todos").contentType(APPLICATION_JSON).content(objectMapper.writeValueAsString(todo)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.content", is(todo.getContent())))
                 .andExpect(jsonPath("$.createdAt", notNullValue()));
