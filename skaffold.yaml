@@ -6,9 +6,9 @@ build:
   artifacts:
     - image: sivaprasadreddy/spring-boot-todolist
       context: .
-      jib: {}
-      #buildpacks:
-      #  builder: paketobuildpacks/builder:base
+      #jib: {}
+      buildpacks:
+        builder: paketobuildpacks/builder:base
 
 deploy:
   kubectl:

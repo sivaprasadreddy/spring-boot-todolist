@@ -29,7 +29,6 @@
         <testcontainers.version>1.19.7</testcontainers.version>
         <spotless.version>2.43.0</spotless.version>
         <properties-maven-plugin.version>1.2.1</properties-maven-plugin.version>
-        <jib-maven-plugin.version>3.4.1</jib-maven-plugin.version>
         <sonar-maven-plugin.version>3.11.0.3922</sonar-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
         <jacoco.minimum.coverage>0.80</jacoco.minimum.coverage>
@@ -42,7 +41,7 @@
         <junit.itReportFolder>${project.testresult.directory}/integrationTest</junit.itReportFolder>
         <dockerhub.username>sivaprasadreddy</dockerhub.username>
         <dockerhub.imageName>${dockerhub.username}/${project.artifactId}</dockerhub.imageName>
-        <java-base-image>eclipse-temurin:19-jre-focal</java-base-image>
+        <java-base-image>eclipse-temurin:21.0.2_13-jre-alpine</java-base-image>
         <archunit.version>1.2.1</archunit.version>
     </properties>
 
@@ -180,28 +179,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>${jib-maven-plugin.version}</version>
-                <configuration>
-                    <from>
-                        <image>${java-base-image}</image>
-                    </from>
-                    <to>
-                        <image>${dockerhub.imageName}</image>
-                        <tags>
-                            <tag>latest</tag>
-                            <tag>${project.version}</tag>
-                        </tags>
-                    </to>
-                    <container>
-                        <ports>
-                            <port>8080</port>
-                        </ports>
-                    </container>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>io.github.git-commit-id</groupId>

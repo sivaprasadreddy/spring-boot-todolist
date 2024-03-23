@@ -38,6 +38,6 @@ jobs:
       - if: ${{ github.ref == 'refs/heads/main' }}
         name: Build and Publish Docker Image
         run: |
-          ./mvnw -DskipTests -Dimage=$DOCKER_IMAGE_NAME jib:dockerBuild
+          ./mvnw -DskipTests spring-boot:build-image -Dspring-boot.build-image.imageName=$DOCKER_IMAGE_NAME
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push $DOCKER_IMAGE_NAME
