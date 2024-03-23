@@ -17,6 +17,13 @@ service:
   type: ClusterIP
   port: 8080
 
+configProperties:
+  application.properties: |-
+    spring.h2.console.enabled: "false"
+    management.endpoint.env.show-values: "never"
+    management.endpoint.configprops.show-values: "never"
+    my.property: "my-value"
+
 ingress:
   enabled: true
   className: "nginx"
