@@ -33,7 +33,7 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   }
   hosts:
-    - host: todolist.local
+    - host: localhost
       paths:
         - path: /
           pathType: Prefix
