@@ -1,0 +1,8 @@
+Cloud-Native TodoList Application {{ .Chart.Version }}
+
+Chart Deployed: {{ .Chart.Name }} - {{ .Chart.Version }}
+Release Name: {{ .Release.Name }}
+
+For more information visit: https://github.com/sivaprasadreddy/spring-boot-todolist
+
+Access the Conference Application Frontend by running `kubectl port-forward svc/todolist -n {{ .Release.Namespace }} 8080:80`

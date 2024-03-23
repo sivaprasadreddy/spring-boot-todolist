@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-todolist-deployment
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: todolist
+  template:
+    metadata:
+      labels:
+        app: todolist
+        app.kubernetes.io/name: todolist
+        app.kubernetes.io/part-of: todolist
+        app.kubernetes.io/version: {{ .Values.services.tag  }}
+    spec:
+      containers:
+      - name: todolist
+        image: "{{ .Values.services.registry }}/{{ .Values.services.todolist.image }}:{{ .Values.services.tag }}"
+        imagePullPolicy: Always
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: k8s
+        - name: DB_HOST
+          value: {{ .Release.Name }}-postgresql.{{ .Release.Namespace }}.svc.cluster.local
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-postgresql
+              key: postgres-password
+        - name: DB_USERNAME
+          value: "postgres"
+        - name: DB_DATABASE
+          value: "todolist"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todolist
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    app: todolist
+  ports:
+  - port: 8080
+    targetPort: 8080

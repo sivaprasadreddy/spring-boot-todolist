@@ -1,0 +1,24 @@
+services:
+    registry: sivaprasadreddy
+    tag: "latest"
+    todolist:
+        image: spring-boot-todolist
+install:
+    infrastructure: true
+    ingress: true
+postgresql:
+    image:
+        debug: true
+    primary:
+        persistence:
+            size: "1Gi"
+        initdb:
+            user: postgres
+            password: postgres
+    global:
+        postgresql:
+            auth:
+                postgresPassword: postgres
+                username: postgres
+                password: postgres
+                database: todolist

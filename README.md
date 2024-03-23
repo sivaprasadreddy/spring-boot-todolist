@@ -2,7 +2,7 @@
 
 A minimal SpringBoot application to try out new features.
 
-![Main Branch CI](https://github.com/sivaprasadreddy/spring-boot-todolist/workflows/Main%20Branch%20CI/badge.svg)
+[![CI Build](https://github.com/sivaprasadreddy/spring-boot-todolist/actions/workflows/maven.yml/badge.svg)](https://github.com/sivaprasadreddy/spring-boot-todolist/actions/workflows/maven.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=sivaprasadreddy_spring-boot-todolist&metric=alert_status)](https://sonarcloud.io/dashboard?id=sivaprasadreddy_spring-boot-todolist)
 
 ## Run using DockerCompose
