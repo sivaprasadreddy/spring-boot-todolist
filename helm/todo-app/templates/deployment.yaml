@@ -39,13 +39,13 @@ spec:
             - name: SPRING_PROFILES_ACTIVE
               value: k8s
             - name: DB_HOST
-              value: {{ .Release.Name }}-postgresql.{{ .Release.Namespace }}.svc.cluster.local
+              value: {{ include "todo-app.databaseHost" . | quote }}
             - name: DB_PASSWORD
-              value: {{ .Values.postgresql.global.postgresql.auth.postgresPassword}}
+              value: {{ include "todo-app.databasePassword" . | quote }}
             - name: DB_USERNAME
-              value: {{ .Values.postgresql.global.postgresql.auth.username}}
+              value: {{ include "todo-app.databaseUser" . | quote }}
             - name: DB_DATABASE
-              value: {{ .Values.postgresql.global.postgresql.auth.database}}
+              value: {{ include "todo-app.databaseName" . | quote }}
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness

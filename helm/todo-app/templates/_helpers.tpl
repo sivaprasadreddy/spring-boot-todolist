@@ -50,3 +50,46 @@ app.kubernetes.io/name: {{ include "todo-app.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+{{/*
+Create a default fully qualified app name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "todo-app.postgresql.fullname" -}}
+{{- include "common.names.dependency.fullname" (dict "chartName" "postgresql" "chartValues" .Values.postgresql "context" $) -}}
+{{- end -}}
+
+{{/*
+Return the Database Hostname
+*/}}
+{{- define "todo-app.databaseHost" -}}
+{{- printf "%s" (include "todo-app.postgresql.fullname" .) -}}
+{{- end -}}
+
+{{/*
+Return the Database Port
+*/}}
+{{- define "todo-app.databasePort" -}}
+{{- printf "5432" -}}
+{{- end -}}
+
+{{/*
+Return the Database Name
+*/}}
+{{- define "todo-app.databaseName" -}}
+{{- printf "%s" .Values.postgresql.global.postgresql.auth.database -}}
+{{- end -}}
+
+{{/*
+Return the Database Username
+*/}}
+{{- define "todo-app.databaseUser" -}}
+{{- printf "%s" .Values.postgresql.global.postgresql.auth.username -}}
+{{- end -}}
+
+
+{{/*
+Return the Database Password
+*/}}
+{{- define "todo-app.databasePassword" -}}
+{{- printf "%s" .Values.postgresql.global.postgresql.auth.postgresPassword -}}
+{{- end -}}

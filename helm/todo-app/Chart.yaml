@@ -23,7 +23,12 @@ version: 0.1.0
 # It is recommended to use it with quotes.
 appVersion: "1.0.0"
 dependencies:
-    - name: postgresql
-      version: 15.1.2
-      repository: oci://registry-1.docker.io/bitnamicharts
-      condition: install.infrastructure
+  - name: postgresql
+    repository: oci://registry-1.docker.io/bitnamicharts
+    version: 15.1.2
+    condition: install.infrastructure
+  - name: common
+    repository: oci://registry-1.docker.io/bitnamicharts
+    version: 2.x.x
+    tags:
+      - bitnami-common
