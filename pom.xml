@@ -42,7 +42,7 @@
         <dockerhub.username>sivaprasadreddy</dockerhub.username>
         <dockerhub.imageName>${dockerhub.username}/${project.artifactId}</dockerhub.imageName>
         <java-base-image>eclipse-temurin:21.0.2_13-jre-alpine</java-base-image>
-        <archunit.version>1.2.1</archunit.version>
+        <archunit.version>1.3.0</archunit.version>
     </properties>
 
     <dependencies>
