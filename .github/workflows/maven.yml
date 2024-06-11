@@ -1,29 +1,24 @@
-name: CI Build
+name: Maven Build
 
 on:
   push:
     branches:
-      - '!gradle'
-      - '**'
+      - 'main'
 
 jobs:
   build:
-    name: Build
+    name: Maven Build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        distribution: [ 'zulu' ]
-        java: [ '21' ]
     env:
       DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/spring-boot-todolist
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Java ${{ matrix.java }} (${{ matrix.distribution }})
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          java-version: ${{ matrix.java }}
-          distribution: ${{ matrix.distribution }}
+          java-version: '21'
+          distribution: 'temurin'
           cache: 'maven'
 
       - name: Build with Maven

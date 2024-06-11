@@ -1,4 +1,4 @@
-name: Gradle Branch CI
+name: Gradle Build
 
 on:
   push:
