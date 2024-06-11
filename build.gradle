@@ -1,0 +1,119 @@
+plugins {
+  id "java"
+  id "org.springframework.boot" version "3.3.0"
+  id "io.spring.dependency-management" version "1.1.5"
+  id "com.gorylenko.gradle-git-properties" version "2.4.1"
+  id "com.google.cloud.tools.jib" version "3.4.3"
+}
+
+def dockerBaseImage = "eclipse-temurin:21-jre-focal"
+def dockerImageName = "sivaprasadreddy/spring-boot-todolist-gradle"
+def dockerImageTags = ["latest", "${project.version}"]
+def appMainClass = "com.sivalabs.todolist.TodoListApplication"
+
+group = "com.sivalabs"
+version = "0.0.1"
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
+}
+
+configurations {
+  compileOnly {
+    extendsFrom annotationProcessor
+  }
+}
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+  maven { url "https://repo.spring.io/milestone" }
+}
+
+ext {
+  set("webjarsLocatorVersion", "0.52")
+  set("bootstrapVersion", "5.3.3")
+  set("jqueryVersion", "3.6.1")
+  set("fontAwesomeVersion", "6.5.2")
+  set("vueVersion", "2.6.14")
+  set("springdocVersion", "2.5.0")
+  set("commonsIoVersion", "2.16.1")
+  set("archunitVersion", "1.3.0")
+}
+
+dependencies {
+  implementation "org.springframework.boot:spring-boot-starter-actuator"
+  implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+  implementation "org.springframework.boot:spring-boot-starter-validation"
+  implementation "org.springframework.boot:spring-boot-starter-web"
+  implementation "org.flywaydb:flyway-core"
+  implementation "org.flywaydb:flyway-database-postgresql"
+  compileOnly "org.projectlombok:lombok"
+  testImplementation "org.projectlombok:lombok"
+  developmentOnly "org.springframework.boot:spring-boot-devtools"
+  runtimeOnly "com.h2database:h2"
+  runtimeOnly "org.postgresql:postgresql"
+  annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+  annotationProcessor "org.projectlombok:lombok"
+  implementation "org.webjars:webjars-locator-core:${webjarsLocatorVersion}"
+  implementation "org.webjars:bootstrap:${bootstrapVersion}"
+  implementation "org.webjars:jquery:${jqueryVersion}"
+  implementation "org.webjars:font-awesome:${fontAwesomeVersion}"
+  implementation "org.webjars:vue:${vueVersion}"
+  implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
+  implementation "org.apache.commons:commons-lang3"
+  implementation "commons-io:commons-io:${commonsIoVersion}"
+
+  testImplementation "org.springframework.boot:spring-boot-starter-test"
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+  testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+  testImplementation "org.testcontainers:junit-jupiter"
+  testImplementation "org.testcontainers:postgresql"
+  testImplementation "com.tngtech.archunit:archunit-junit5:${archunitVersion}"
+}
+
+
+bootBuildImage {
+  imageName = dockerImageName
+  tags = dockerImageTags
+}
+
+jib {
+  from {
+    image = dockerBaseImage
+  }
+  to {
+    image = dockerImageName
+    tags = dockerImageTags
+  }
+  container {
+    jvmFlags = ["-Xms512m", "-Xdebug"]
+    mainClass = appMainClass
+    args = []
+    ports = ["8080/tcp"]
+  }
+}
+
+bootRun {
+  args = ["--spring.profiles.active=local"]
+}
+
+gitProperties {
+  failOnNoGitDirectory = false
+  keys = ["git.branch",
+          "git.commit.id.abbrev",
+          "git.commit.user.name",
+          "git.commit.message.full"
+  ]
+}
+
+test {
+  useJUnitPlatform()
+  testLogging {
+    events = ["PASSED", "FAILED", "SKIPPED"]
+    showStandardStreams = true
+    exceptionFormat = "full"
+  }
+}
