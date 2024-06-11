@@ -33,7 +33,7 @@ repositories {
 }
 
 ext {
-  set("webjarsLocatorVersion", "0.52")
+  set("webjarsLocatorVersion", "0.59")
   set("bootstrapVersion", "5.3.3")
   set("jqueryVersion", "3.7.1")
   set("fontAwesomeVersion", "6.5.2")
