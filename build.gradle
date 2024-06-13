@@ -37,7 +37,7 @@ ext {
   set("bootstrapVersion", "5.3.3")
   set("jqueryVersion", "3.7.1")
   set("fontAwesomeVersion", "6.5.2")
-  set("vueVersion", "2.6.14")
+  set("vueVersion", "3.4.27")
   set("springdocVersion", "2.5.0")
   set("commonsIoVersion", "2.16.1")
   set("archunitVersion", "1.3.0")
@@ -61,7 +61,7 @@ dependencies {
   implementation "org.webjars:bootstrap:${bootstrapVersion}"
   implementation "org.webjars:jquery:${jqueryVersion}"
   implementation "org.webjars:font-awesome:${fontAwesomeVersion}"
-  implementation "org.webjars:vue:${vueVersion}"
+  implementation "org.webjars.npm:vue:${vueVersion}"
   implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
   implementation "org.apache.commons:commons-lang3"
   implementation "commons-io:commons-io:${commonsIoVersion}"
