@@ -47,4 +47,3 @@ spec:
                 configMapKeyRef:
                   name: todolist-configmap
                   key: postgres_database
-

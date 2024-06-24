@@ -4,4 +4,3 @@ image:
 tasks:
   - name: Build application
     init: ./mvnw -B dependency:go-offline package
-

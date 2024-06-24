@@ -64,4 +64,3 @@ spec:
         - name: config-volume
           configMap:
             name: {{ include "todo-app.fullname" . }}-configmap
-

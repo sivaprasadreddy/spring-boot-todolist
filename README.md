@@ -34,7 +34,7 @@ kubectl apply -f k8s/todolist.yaml
 kubectl apply -f k8s/
 
 kubectl scale --replicas=2 deployment spring-boot-todolist-deployment
-    
+
 kubectl create deployment spring-boot-todolist --image sivaprasadreddy/spring-boot-todolist -o yaml --dry-run=client > k8s/deployment.yaml
 
 kubectl create service clusterip spring-boot-todolist --tcp 80:8080 -o yaml --dry-run=client > k8s/service.yaml
