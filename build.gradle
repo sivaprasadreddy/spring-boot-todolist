@@ -38,7 +38,7 @@ ext {
   set("jqueryVersion", "3.7.1")
   set("fontAwesomeVersion", "6.5.2")
   set("vueVersion", "3.4.27")
-  set("springdocVersion", "2.5.0")
+  set("springdocVersion", "2.6.0")
   set("commonsIoVersion", "2.16.1")
   set("archunitVersion", "1.3.0")
 }
