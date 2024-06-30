@@ -20,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>21</java.version>
-        <springdoc.version>2.5.0</springdoc.version>
+        <springdoc.version>2.6.0</springdoc.version>
         <commons-io.version>2.16.1</commons-io.version>
         <webjars-locator.version>0.59</webjars-locator.version>
         <bootstrap.version>5.3.3</bootstrap.version>
