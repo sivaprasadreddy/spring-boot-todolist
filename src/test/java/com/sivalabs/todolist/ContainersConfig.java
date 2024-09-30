@@ -11,6 +11,6 @@ public class ContainersConfig {
     @Bean
     @ServiceConnection
     public PostgreSQLContainer<?> sqlContainer() {
-        return new PostgreSQLContainer<>("postgres:16-alpine");
+        return new PostgreSQLContainer<>("postgres:17-alpine");
     }
 }

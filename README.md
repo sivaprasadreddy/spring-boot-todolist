@@ -20,6 +20,7 @@ cd kind
 ./create-cluster.sh
 cd ..
 ./run.sh k8s_deploy
+# Access http://localhost:30090
 ./run.sh k8s_undeploy
 ./kind/destroy-cluster.sh
 ```
