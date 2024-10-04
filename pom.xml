@@ -26,7 +26,7 @@
         <bootstrap.version>5.3.3</bootstrap.version>
         <jquery.version>3.7.1</jquery.version>
         <font_awesome.version>6.5.2</font_awesome.version>
-        <vue.version>3.5.10</vue.version>
+        <vue.version>3.5.11</vue.version>
         <testcontainers.version>1.20.0</testcontainers.version>
         <spotless.version>2.43.0</spotless.version>
         <properties-maven-plugin.version>1.2.1</properties-maven-plugin.version>

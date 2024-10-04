@@ -37,7 +37,7 @@ ext {
   set("bootstrapVersion", "5.3.3")
   set("jqueryVersion", "3.7.1")
   set("fontAwesomeVersion", "6.5.2")
-  set("vueVersion", "3.5.10")
+  set("vueVersion", "3.5.11")
   set("springdocVersion", "2.6.0")
   set("commonsIoVersion", "2.16.1")
   set("archunitVersion", "1.3.0")
